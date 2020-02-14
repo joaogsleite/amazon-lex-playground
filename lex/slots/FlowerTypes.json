@@ -1,0 +1,17 @@
+{
+  "enumerationValues": [
+    {
+      "value": "tulips"
+    },
+    {
+      "value": "lilies"
+    },
+    {
+      "value": "roses"
+    }
+  ],
+  "name": "FlowerTypes",
+  "checksum": "626f51ef-7daf-4b37-ac89-3a94aae8f810",
+  "valueSelectionStrategy": "ORIGINAL_VALUE",
+  "description": "Types of flowers to pick up"
+}

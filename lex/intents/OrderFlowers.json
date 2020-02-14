@@ -3,13 +3,13 @@
     "maxAttempts": 2,
     "messages": [
       {
-        "content": "Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}.  Does this sound okay?",
+        "content": "Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}. Does this sound okay?",
         "contentType": "PlainText"
       }
     ]
   },
   "name": "OrderFlowers",
-  "checksum": "32281d4a-655e-4ca2-b6b2-7837b9d507c7",
+  "checksum": "0a637ab7-69e6-4de5-b6ed-5a284e45310e",
   "rejectionStatement": {
     "messages": [
       {
@@ -77,7 +77,11 @@
     }
   ],
   "fulfillmentActivity": {
-    "type": "ReturnIntent"
+    "type": "CodeHook",
+    "codeHook": {
+      "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersCodeHook",
+      "messageVersion": "1.0"
+    }
   },
   "description": "Intent to order a bouquet of flowers for pick up"
 }

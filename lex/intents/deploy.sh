@@ -16,23 +16,31 @@ if [ -z "$INTENT_NAME" ]; then
 fi
 
 
+# fulfill sensitive data (REGION & ACCOUNT_ID)
+JSON=$(cat $INTENT_NAME.json)
+JSON=${JSON//REGION/$REGION}
+JSON=${JSON//ACCOUNT_ID/$ACCOUNT_ID}
+
+
 # deploy intent
 aws lex-models put-intent \
   --region $REGION \
   --name $INTENT_NAME \
-  --cli-input-json file://$INTENT_NAME.json \
-  > /dev/null
+  --cli-input-json "$JSON"
 
 
 # get deployed intent
-aws lex-models get-intent \
+JSON=$(aws lex-models get-intent \
   --region $REGION \
   --name $INTENT_NAME \
-  --intent-version "\$LATEST" \
-  > $INTENT_NAME-deployed.json
+  --intent-version "\$LATEST")
+
+
+# hide sensitive data (REGION & ACCOUNT_ID)
+JSON=${JSON//$REGION/REGION}
+JSON=${JSON//$ACCOUNT_ID/ACCOUNT_ID}
 
 
 # delete unnecessary keys from deployed json
-jq 'del(.lastUpdatedDate, .createdDate, .version)' \
-  $INTENT_NAME-deployed.json > $INTENT_NAME.json
-rm $INTENT_NAME-deployed.json
+echo $JSON | jq 'del(.lastUpdatedDate, .createdDate, .version)' \
+  > $INTENT_NAME.json

@@ -6,7 +6,6 @@
 
 # variables
 source ../../.env
-BOT_NAME=OrderFlowersBot
 
 
 # deploy bot to aws

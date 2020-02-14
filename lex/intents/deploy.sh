@@ -18,15 +18,30 @@ fi
 
 # fulfill sensitive data (REGION & ACCOUNT_ID)
 JSON=$(cat $INTENT_NAME.json)
+CODEHOOKURI=$(echo $JSON | jq '.fulfillmentActivity.codeHook.uri')
+LAMBDA_NAME=${CODEHOOKURI/\"arn:aws:lambda:REGION:ACCOUNT_ID:function:/}
+LAMBDA_NAME=${LAMBDA_NAME/\"/}
 JSON=${JSON//REGION/$REGION}
 JSON=${JSON//ACCOUNT_ID/$ACCOUNT_ID}
+
+
+# add permission
+aws lambda add-permission \
+  --region $REGION \
+  --function-name $LAMBDA_NAME \
+  --statement-id $BOT_NAME \
+  --action lambda:InvokeFunction \
+  --principal lex.amazonaws.com \
+  --source-arn "arn:aws:lex:$REGION:$ACCOUNT_ID:intent:$INTENT_NAME:*" \
+  2>/dev/null || true
 
 
 # deploy intent
 aws lex-models put-intent \
   --region $REGION \
   --name $INTENT_NAME \
-  --cli-input-json "$JSON"
+  --cli-input-json "$JSON" \
+  > /dev/null
 
 
 # get deployed intent

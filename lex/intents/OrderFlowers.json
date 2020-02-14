@@ -9,7 +9,7 @@
     ]
   },
   "name": "OrderFlowers",
-  "checksum": "0a637ab7-69e6-4de5-b6ed-5a284e45310e",
+  "checksum": "4deca661-66a6-419a-a951-caf94a549d68",
   "rejectionStatement": {
     "messages": [
       {
@@ -37,6 +37,7 @@
         ]
       },
       "priority": 3,
+      "sampleUtterances": [],
       "description": "The time to pick up the flowers"
     },
     {
@@ -53,7 +54,7 @@
         ]
       },
       "priority": 1,
-      "slotTypeVersion": "$LATEST",
+      "slotTypeVersion": "1",
       "sampleUtterances": [
         "I would like to order {FlowerType}"
       ],
@@ -73,6 +74,7 @@
         ]
       },
       "priority": 2,
+      "sampleUtterances": [],
       "description": "The date to pick up the flowers"
     }
   ],

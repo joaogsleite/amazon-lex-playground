@@ -7,7 +7,6 @@
   ],
   "name": "OrderFlowersBot",
   "locale": "en-US",
-  "checksum": "507ea8e5-243d-40a3-bec1-c07248f09c8f",
   "abortStatement": {
     "messages": [
       {

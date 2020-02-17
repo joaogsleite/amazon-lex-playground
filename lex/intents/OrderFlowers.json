@@ -3,13 +3,12 @@
     "maxAttempts": 2,
     "messages": [
       {
-        "content": "Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}. Does this sound okay?",
+        "content": "Okay, your {FlowerType} will be ready for pickup by {PickupTime} on {PickupDate}.  Does this sound okay?",
         "contentType": "PlainText"
       }
     ]
   },
   "name": "OrderFlowers",
-  "checksum": "4deca661-66a6-419a-a951-caf94a549d68",
   "rejectionStatement": {
     "messages": [
       {
@@ -24,23 +23,6 @@
   ],
   "slots": [
     {
-      "slotType": "AMAZON.TIME",
-      "name": "PickupTime",
-      "slotConstraint": "Required",
-      "valueElicitationPrompt": {
-        "maxAttempts": 2,
-        "messages": [
-          {
-            "content": "Pick up the {FlowerType} at what time on {PickupDate}?",
-            "contentType": "PlainText"
-          }
-        ]
-      },
-      "priority": 3,
-      "sampleUtterances": [],
-      "description": "The time to pick up the flowers"
-    },
-    {
       "slotType": "FlowerTypes",
       "name": "FlowerType",
       "slotConstraint": "Required",
@@ -54,7 +36,7 @@
         ]
       },
       "priority": 1,
-      "slotTypeVersion": "1",
+      "slotTypeVersion": "$LATEST",
       "sampleUtterances": [
         "I would like to order {FlowerType}"
       ],
@@ -74,8 +56,23 @@
         ]
       },
       "priority": 2,
-      "sampleUtterances": [],
       "description": "The date to pick up the flowers"
+    },
+    {
+      "slotType": "AMAZON.TIME",
+      "name": "PickupTime",
+      "slotConstraint": "Required",
+      "valueElicitationPrompt": {
+        "maxAttempts": 2,
+        "messages": [
+          {
+            "content": "Pick up the {FlowerType} at what time on {PickupDate}?",
+            "contentType": "PlainText"
+          }
+        ]
+      },
+      "priority": 3,
+      "description": "The time to pick up the flowers"
     }
   ],
   "fulfillmentActivity": {

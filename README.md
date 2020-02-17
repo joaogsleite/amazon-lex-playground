@@ -7,19 +7,7 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 
 ## Requirements
 
-* AWS CLI
-
-  The AWS Command Line Interface
-
-  > You can dowload `aws` from [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
-
-  > To configure your AWS CLI, run: `aws configure`
-
-* jq
-
-  Shell program to parse and edit json files
-
-  > You can download `jq` from [here](https://stedolan.github.io/jq/)
+* node 12
 
 ## Project structure
 
@@ -30,6 +18,7 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 * lambdas
   * validation
   * fullfilment
+* scripts
 
 
 ## Usage
@@ -37,29 +26,16 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 * Edit **json** files inside `lex/` sub-folders to edit *bot*, *intents* and *slots*
 * Edit **js** files inside `lambdas/` folder to edit *validation* and *fulfillment* bot functions
 
+
 ## Deploy
 
-Use `deploy.sh` inside each sub-project folder
+* `npm run put:slot -- <slotName>`
 
-* Example for *slot*
+* `npm run put:intent -- <intentName>`
 
-  ```bash
-  cd lex/slot/
-  ./deploy.sh "FlowerTypes"
-  ```
+* `npm run put:bot -- <botName>`
 
-* Example for *validation* lambda
-
-  ```bash
-  cd lambda/
-  ./deploy.sh "validation"
-  ```
 
 ## Test
 
-Use `test.sh` inside `lex/bot/test.sh`
-
-```bash
-cd lex/bot/
-./test.sh "I want to order some flowers"
-```
+* `npm run test:bot -- <botName> <inputText>`

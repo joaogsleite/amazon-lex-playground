@@ -1,0 +1,32 @@
+{
+  "name": "amazon-lex-playground",
+  "version": "0.0.1",
+  "description": "Amazon lex playground",
+  "main": "index.js",
+  "scripts": {
+    "put:bot": "node scripts/putBot.js",
+    "put:intent": "node scripts/putIntent.js",
+    "put:slot": "node scripts/putSlot.js",
+    "test:bot": "node scripts/testBot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaogsleite/amazon-lex-playground.git"
+  },
+  "keywords": [
+    "amazon",
+    "aws",
+    "lex",
+    "chatbot"
+  ],
+  "author": "joaogsleite",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joaogsleite/amazon-lex-playground/issues"
+  },
+  "homepage": "https://github.com/joaogsleite/amazon-lex-playground#readme",
+  "dependencies": {
+    "aws-sdk": "^2.619.0",
+    "dotenv": "^8.2.0"
+  }
+}

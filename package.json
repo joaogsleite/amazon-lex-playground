@@ -4,6 +4,7 @@
   "description": "Amazon lex playground",
   "main": "index.js",
   "scripts": {
+    "put:lambda": "node scripts/putLambda.js",
     "put:bot": "node scripts/putBot.js",
     "put:intent": "node scripts/putIntent.js",
     "put:slot": "node scripts/putSlot.js",

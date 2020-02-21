@@ -78,7 +78,7 @@
   "fulfillmentActivity": {
     "type": "CodeHook",
     "codeHook": {
-      "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersCodeHook",
+      "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersFulfillmentLambda",
       "messageVersion": "1.0"
     }
   },

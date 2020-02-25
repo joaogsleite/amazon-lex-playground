@@ -7,9 +7,10 @@ const connectors = require('../connectors');
  * @param {number} userId
  * @param {string} body
  */
-function receiveMsg(platform, userId, body) {
+async function receiveMsg(platform, userId, body) {
   // example echo bot
-  return sendMsg(platform, userId, body);
+  //return sendMsg(platform, userId, body);
+  console.log(`Message received on ${platform} from ${userId}: ${body}`);
 };
 
 

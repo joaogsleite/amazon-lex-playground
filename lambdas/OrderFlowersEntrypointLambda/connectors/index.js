@@ -1,7 +1,19 @@
 // message controller
 const messageController = require('../controllers/messages')
 
-// connectors
+
+/**
+ * Receive message
+ * @param {'messenger'} platform
+ * @param {number} from
+ * @param {string} body
+ */
+module.exports.receiveMsg = function (platform, from, body) {
+  return messageController.receiveMsg(platform, from, body);
+};
+
+
+// platform connectors
 const messenger = require('./messenger');
 
 
@@ -16,15 +28,4 @@ module.exports.sendMsg = function (platform, to, body) {
     case 'messenger':
       return messenger.sendMsg(to, body);
   }
-};
-
-
-/**
- * Receive message
- * @param {'messenger'} platform
- * @param {number} from
- * @param {string} body
- */
-module.exports.receiveMsg = function (platform, from, body) {
-  messageController.receiveMsg(platform, from, body);
 };

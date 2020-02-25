@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { response } = require('./utils/api');
 
 const listeners = []
 
@@ -22,6 +23,8 @@ async function handler (event, context) {
   }) || {};
   if (func) {
     return await func(event, context);
+  } else {
+    return response({ error: 'Not found' }, 404);
   }
 };
 

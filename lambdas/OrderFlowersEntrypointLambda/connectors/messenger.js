@@ -1,6 +1,7 @@
 const { addListener } = require('../index');
+const { response } = require('../utils/api');
 const axios = require('axios');
-const { receiveMsg } = require('./');
+const { receiveMsg } = require('.');
 
 const { FB_PAGE_TOKEN, FB_VERIFY_TOKEN } = process.env
 
@@ -22,18 +23,19 @@ module.exports.sendMsg = function (to, message, type = 'RESPONSE') {
 };
 
 
-addListener('/messenger/webhook', function (event) {
+addListener('/messenger/webhook', async function (event) {
   switch (event.httpMethod) {
     case 'GET':
       const query = event.queryStringParameters
-      if (query['hub.verify_token'] === FB_VERIFY_TOKEN && query['hub.mode'] === 'subscribe') {
-        return 'WEBHOOK_VERIFIED';
+      if (query && query['hub.verify_token'] === FB_VERIFY_TOKEN && query['hub.mode'] === 'subscribe') {
+        return response('WEBHOOK_VERIFIED');
       } else {
-        return null;
+        return response('WEBHOOK_NOT_VERIFIED', 403);
       }
     case 'POST':
     default:
-      const body = event.body;
-      return receiveMsg('messenger', body.sender.id, body.message.text);
+      const body = JSON.parse(event.body);
+      await receiveMsg('messenger', body.sender.id, body.message.text);
+      return response('EVENT_RECEIVED');
   }
 });

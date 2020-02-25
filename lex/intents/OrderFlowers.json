@@ -75,6 +75,10 @@
       "description": "The time to pick up the flowers"
     }
   ],
+  "dialogCodeHook": {
+    "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersDialogLambda",
+    "messageVersion": "1.0"
+  },
   "fulfillmentActivity": {
     "type": "CodeHook",
     "codeHook": {

@@ -1,0 +1,10 @@
+{
+  "endpointConfiguration": {
+    "types": [
+      "REGIONAL"
+    ],
+    "vpcEndpointIds": []
+  },
+  "tags": {},
+  "id": "3zt8sagp6e"
+}

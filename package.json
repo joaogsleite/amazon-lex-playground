@@ -4,11 +4,14 @@
   "description": "Amazon lex playground",
   "main": "index.js",
   "scripts": {
+    "put:role": "node scripts/putRole.js",
+    "put:api": "node scripts/putApi.js",
     "put:lambda": "node scripts/putLambda.js",
     "put:bot": "node scripts/putBot.js",
     "put:intent": "node scripts/putIntent.js",
     "put:slot": "node scripts/putSlot.js",
-    "test:bot": "node scripts/testBot.js"
+    "test:bot": "node scripts/testBot.js",
+    "deploy": "node scripts/deploy.js"
   },
   "repository": {
     "type": "git",

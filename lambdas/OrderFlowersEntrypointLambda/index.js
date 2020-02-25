@@ -1,16 +1,36 @@
-const AWS = require('aws-sdk');
+require('dotenv').config();
 
-const TERMINOLOGY_NAMES = [];
+const listeners = []
 
-exports.handler = async function (event) {
-  const translateService = new AWS.Translate();
-  const text = 'Olá mundo!';
-  const params = {
-    SourceLanguageCode: 'auto',
-    TargetLanguageCode: 'en',
-    Text: text,
-    TerminologyNames: TERMINOLOGY_NAMES,
-  };
-  const result = await translateService.translateText(params).promise();
-  console.log('result', result);
+/**
+ * Add new event listener
+ * @param {string} eventName
+ * @param {(event: any) => Promise<any>} listener
+ */
+function addListener (name, func) {
+  listeners.push({ name, func })
+};
+
+
+/**
+ * Handler function for AWS Lambda function
+ */
+async function handler (event, context) {
+  const eventName = event.path || event.resource;
+  const { func } = listeners.find(({ name }) => {
+    return eventName.includes(name);
+  }) || {};
+  if (func) {
+    return await func(event, context);
+  }
+};
+
+
+module.exports = {
+  addListener,
+  handler,
 }
+
+
+/* Import all platform connectors */
+require('./connectors');

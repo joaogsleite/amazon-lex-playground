@@ -18,6 +18,7 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 * lambdas
   * validation
   * fullfilment
+* api
 * scripts
 
 
@@ -25,9 +26,12 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 
 * Edit **json** files inside `lex/` sub-folders to edit *bot*, *intents* and *slots*
 * Edit **js** files inside `lambdas/` folder to edit *validation* and *fulfillment* bot functions
+* Edit **json** files inside `api/` folder to edit api gateway configurations
 
 
-## Deploy
+## Scripts available
+
+* `npm run put:lambda -- <lambdaName>`
 
 * `npm run put:slot -- <slotName>`
 
@@ -35,7 +39,23 @@ The project was created based on [this](https://docs.aws.amazon.com/lex/latest/d
 
 * `npm run put:bot -- <botName>`
 
+* `npm run put:api -- <apiGatewayName>`
+
+
+## Deploy
+
+* Edit `scripts/deploy.js` file
+
+* Run `npm run deploy`
+
 
 ## Test
 
 * `npm run test:bot -- <botName> <inputText>`
+
+
+## Platforms
+
+### Facebook
+
+* Test accounts: [whitehat](https://www.facebook.com/whitehat/accounts/)

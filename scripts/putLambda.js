@@ -1,16 +1,18 @@
 const path = require('path');
 const fs = require('fs');
 const sh = require('child_process').execSync;
-const { lambda, accountId } = require('.');
+const putRole = require('./putRole');
+const { lambda } = require('.');
 
-// get bot name from ARGS
-const name = process.argv[2];
+async function putLambda(name){
 
-(async function(){
-
-  sh(`cd lambdas/${name} && zip -r ../../build/${name}.zip .`)
-
-  const packageJSON = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'lambdas', name, 'package.json')));
+  sh(`
+    cd lambdas/${name}
+    cp ../../.env .
+    npm install --no-package-lock
+    zip -r ../../build/${name}.zip .
+    rm .env
+  `);
 
   const searchParams = {
     FunctionName: name,
@@ -22,9 +24,12 @@ const name = process.argv[2];
       Publish: true, 
       ZipFile: fs.readFileSync(path.join(__dirname, '..', 'build', name+'.zip')),
     };
+    console.log(`Lambda function ${name} already exists. Just updating the code...`);
     await lambda.updateFunctionCode(params).promise();
+    console.log(`Lambda function ${name} code updated.`);
   } else {
-    const params = {
+    const role = await putRole(name+'Role', 'lambda');
+    const lambdaParams = {
       Code: {
         ZipFile: fs.readFileSync(path.join(__dirname, '..', 'build', name+'.zip')),
       }, 
@@ -33,11 +38,17 @@ const name = process.argv[2];
       Handler: "index.handler",
       MemorySize: 128, 
       Publish: true, 
-      Role: packageJSON.config['aws:role'].replace('ACCOUNT_ID', accountId),
+      Role: role.Arn,
       Runtime: "nodejs12.x", 
       Timeout: 15,
     };
-    await lambda.createFunction(params).promise();
+    console.log(`Creating lambda function ${name}...`);
+    await lambda.createFunction(lambdaParams).promise();
+    console.log(`Lambda function ${name} created.`);
   }
+};
 
-})();
+module.exports = putLambda;
+if (require.main === module) {
+  putLambda(process.argv[2]);
+}

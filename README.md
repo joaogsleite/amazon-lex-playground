@@ -2,8 +2,6 @@
 
 Playground project to test the aws lex bot platform.
 
-The project was created based on [this](https://docs.aws.amazon.com/lex/latest/dg/gs-cli.html) tutorial.
-
 
 ## Requirements
 

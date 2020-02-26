@@ -25,13 +25,13 @@ Playground project to test the aws lex bot platform.
                                     ^
                                     |
                                     V
-Facebook --> API Gateway --> EntrypointLambda --> AmazonLexBOT
-                                    ||                 |
-                                connectors             |
-                                                       V
-                                 DialogLambda  <-->  Intent  <-->  FulfillmentLambda
-                                                       ||
-                                                    slotTypes
+   Platforms --> API Gateway --> EntrypointLambda --> AmazonLexBOT
+(ex: messenger)                         ||                 |
+                                    connectors             |
+                                                           V
+                                     DialogLambda  <-->  Intent  <-->  FulfillmentLambda
+                                                           ||
+                                                        slotTypes
 ```
 
 

@@ -55,6 +55,7 @@ Playground project to test the aws lex bot platform.
 * Edit **json** files inside `lex/` sub-folders to edit *bot*, *intents* and *slots*
 * Edit **js** files inside `lambdas/` folder to edit *validation* and *fulfillment* bot functions
 * Edit **json** files inside `api/` folder to edit api gateway configurations
+* Copy `.env.example` to `.env` and replace environment variables values
 
 
 ### Scripts available
@@ -81,9 +82,9 @@ Playground project to test the aws lex bot platform.
 > After deploy, you can delete all created resources on AWS with `npm run clean`
 
 
-### Test
+### Setup connectors
 
-* `npm run test:bot -- <botName> <inputText>`
+Add API Gateway live URL to the platform configuration dashboard (ex: Facebook Messenger Platform Webhook)
 
 
 ## AWS
@@ -92,7 +93,7 @@ Playground project to test the aws lex bot platform.
 
 Amazon Resource Name (ARN): `arn:aws:SERVICE:REGION:ACCOUND_ID:RESOURCE_PATH/RESOURCE_ID`
 
-**ARN string examples**:
+ARN string examples:
 
 * Lambda function: `arn:aws:lambda:eu-west-1:123456789:function:OrderFlowersEntrypointLambda`
 * API Gateway: `arn:aws:apigateway:eu-west-1:123456789:1234567`
@@ -111,7 +112,7 @@ You can use roles to delegate access to users, applications, or services that do
 
 You manage access in AWS by creating policies and attaching them to IAM identities (Users or Roles) or AWS resources (Lambdas, API Gateways, ...)
 
-**Policy JSON example**:
+Policy JSON example:
 
 ```json
 {

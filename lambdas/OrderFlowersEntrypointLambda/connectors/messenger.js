@@ -35,7 +35,22 @@ addListener('/messenger/webhook', async function (event) {
     case 'POST':
     default:
       const body = JSON.parse(event.body);
-      await receiveMsg('messenger', body.sender.id, body.message.text);
-      return response('EVENT_RECEIVED');
+      if (body.object === 'page') {
+        for(const entry of body.entry) {
+          let webhook_event = entry.messaging[0];
+          let sender_psid = webhook_event.sender.id;
+          if (webhook_event.message) {
+            await receiveMsg('messenger', sender_psid, webhook_event.message.text);
+          } else if (webhook_event.postback) {
+            await receiveMsg('messenger', sender_psid, webhook_event.postback);
+          }
+        };
+        return response('EVENT_RECEIVED');
+      } else {
+        res.sendStatus(404);
+        return response('ERROR', 404);
+      }
+     
+      
   }
 });

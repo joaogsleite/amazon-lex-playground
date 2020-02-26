@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { lex } = require('.');
+const { lex, lexRuntime } = require('.');
 
 async function deleteBot(name) {
   console.log(`Deleting BOT ${name}...`);

@@ -5,7 +5,7 @@
  * @param {number} statusCode
  * @param {{[key: string]: string}} headers
  */
-module.exports.response = function(data, statusCode = 200, headers = {}) {
+function response(data, statusCode = 200, headers = {}) {
   headers['Content-Type'] = typeof data === 'string'
     ? 'text/plain'
     : 'application/json'
@@ -17,4 +17,8 @@ module.exports.response = function(data, statusCode = 200, headers = {}) {
       ? data
       : JSON.stringify(data),
   };
+}
+
+module.exports = {
+  response,
 }

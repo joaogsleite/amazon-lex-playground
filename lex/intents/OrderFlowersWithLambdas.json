@@ -75,8 +75,16 @@
       "description": "The time to pick up the flowers"
     }
   ],
+  "dialogCodeHook": {
+    "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersDialogLambda",
+    "messageVersion": "1.0"
+  },
   "fulfillmentActivity": {
-    "type": "ReturnIntent"
+    "type": "CodeHook",
+    "codeHook": {
+      "uri": "arn:aws:lambda:REGION:ACCOUNT_ID:function:OrderFlowersFulfillmentLambda",
+      "messageVersion": "1.0"
+    }
   },
   "description": "Intent to order a bouquet of flowers for pick up"
 }

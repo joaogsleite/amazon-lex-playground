@@ -8,11 +8,8 @@ const messageController = require('../controllers/messages')
  * @param {number} from
  * @param {string} body
  */
-module.exports.receiveMsg = function (context, from, body) {
-  context = typeof context === 'string'
-    ? { platform: context }
-    : context;
-  return messageController.receiveMsg(context, from, body);
+module.exports.receiveMsg = function (context, body) {
+  return messageController.receiveMsg(context, body);
 };
 
 
@@ -26,9 +23,9 @@ const messenger = require('./messenger');
  * @param {number} to
  * @param {string} body
  */
-module.exports.sendMsg = function (context, to, body) {
+module.exports.sendMsg = function (context, body) {
   switch(context.platform) {
     case 'messenger':
-      return messenger.sendMsg(to, body);
+      return messenger.sendMsg(context, body);
   }
 };

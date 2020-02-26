@@ -3,11 +3,13 @@ const path = require('path');
 const { lex, lambda, region, accountId, sleep } = require('.');
 
 function replaceLambdaURI(lambdaInfo) {
+  if (!lambdaInfo) return;
   lambdaInfo.uri = lambdaInfo.uri.replace('REGION', region);
   lambdaInfo.uri = lambdaInfo.uri.replace('ACCOUNT_ID', accountId); 
 }
 
 async function addPermission(lambdaInfo) {
+  if (!lambdaInfo) return;
   const lambdaName = lambdaInfo.uri.replace(`arn:aws:lambda:${region}:${accountId}:function:`, '');
   const permission = {
     Action: "lambda:InvokeFunction", 

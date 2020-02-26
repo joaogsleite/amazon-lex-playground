@@ -1,10 +1,21 @@
 const path = require('path');
 const fs = require('fs');
 const sh = require('child_process').execSync;
-const putRole = require('./putRole');
 const { lambda } = require('.');
+const { putRole, deleteRole } = require('./role');
 
-async function putLambda(name){
+async function deleteLambda(name) {
+  const lambdaFunction = await lambda.getFunction({ FunctionName: name }).promise().catch(() => undefined)
+  console.log(`Deleting lambda function ${name}...`);
+  if (lambdaFunction) {
+    const roleName = lambdaFunction.Configuration.Role;
+    await lambda.deleteFunction({ FunctionName: name }).promise();
+    await deleteRole(roleName);
+  }
+  console.log(`Lambda function ${name} deleted.`);
+}
+
+async function putLambda(name, permissions = ['lambda']){
 
   sh(`
     cd lambdas/${name}
@@ -28,7 +39,7 @@ async function putLambda(name){
     await lambda.updateFunctionCode(params).promise();
     console.log(`Lambda function ${name} code updated.`);
   } else {
-    const role = await putRole(name+'Role', 'lambda');
+    const role = await putRole(name+'Role', 'lambda', permissions);
     const lambdaParams = {
       Code: {
         ZipFile: fs.readFileSync(path.join(__dirname, '..', 'build', name+'.zip')),
@@ -48,7 +59,7 @@ async function putLambda(name){
   }
 };
 
-module.exports = putLambda;
+module.exports = { putLambda, deleteLambda };
 if (require.main === module) {
   putLambda(process.argv[2]);
 }

@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { lex } = require('.');
 
+async function deleteSlot(name) {
+  console.log(`Deleting slot ${name}...`);
+  await lex.deleteSlotType({ name }).promise().catch(() => undefined);
+  console.log(`Slot ${name} deleted.`);
+}
+
 async function putSlot(name) {
   
   // get slotType json
@@ -25,7 +31,7 @@ async function putSlot(name) {
 
 };
 
-module.exports = putSlot;
+module.exports = { deleteSlot, putSlot };
 if (require.main === module) {
   putSlot(process.argv[2]);
 }

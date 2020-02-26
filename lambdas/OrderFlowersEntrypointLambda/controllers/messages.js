@@ -1,27 +1,40 @@
 const connectors = require('../connectors');
+const translate = require('../services/translate');
+
+function handleResponse(text) {
+  if (text.includes('ello')) {
+    return 'Hello!';
+  } else if (text.includes('ho are you')) {
+    return 'I am a bot.';
+  } else {
+    return 'Please try again.';
+  }
+}
 
 
 /**
  * Receive message
- * @param {'messenger'} platform
+ * @param {{context:'messenger',language:string}} context
  * @param {number} userId
  * @param {string} body
  */
-async function receiveMsg(platform, userId, body) {
-  // example echo bot
-  //return sendMsg(platform, userId, body);
-  console.log(`Message received on ${platform} from ${userId}: ${body}`);
+async function receiveMsg(context, userId, body) {
+  const { text, language } = await translate(body);
+  context.language = language;
+  const response = handleResponse(text)
+  await sendMsg(context, userId, response);
 };
 
 
 /**
  * Send message
- * @param {'messenger'} platform
+ * @param {{context:'messenger',laguage:string}} context
  * @param {number} userId
  * @param {string} body
  */
-function sendMsg(platform, userId, body) {
-  return connectors.sendMsg(platform, userId, body);
+async function sendMsg(context, userId, body) {
+  const { text } = await translate(body, context.language);
+  return await connectors.sendMsg(context.platform, userId, text);
 };
 
 

@@ -21,8 +21,13 @@ async function addPermission(lambdaInfo) {
   await sleep(1000);
 }
 
+async function deleteIntent(name) {
+  console.log(`Deleting intent ${name}...`);
+  await lex.deleteIntent({ name }).promise().catch(() => undefined);
+  console.log(`Intent ${name} deleted.`);
+}
+
 async function putIntent(name){
-  
   // get intent json
   const data = JSON.parse(fs.readFileSync(path.join(__dirname,'..','lex','intents',`${name}.json`),'utf-8'));
   replaceLambdaURI(data.fulfillmentActivity.codeHook);
@@ -49,7 +54,7 @@ async function putIntent(name){
 
 }
 
-module.exports = putIntent;
+module.exports = { putIntent, deleteIntent };
 if (require.main === module) {
   putIntent(process.argv[2]);
 }

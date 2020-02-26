@@ -14,12 +14,11 @@ const { FB_PAGE_TOKEN, FB_VERIFY_TOKEN } = process.env
  */
 module.exports.sendMsg = function (to, message, type = 'RESPONSE') {
   const body = {
-    messaging_type: type,
     recipient: { id: to },
-    message,
+    message: { text: message },
   };
   const url = `https://graph.facebook.com/v6.0/me/messages?access_token=${FB_PAGE_TOKEN}`;
-  return axios.post(url, body);
+  return axios.post(url, body).catch(console.log)
 };
 
 

@@ -2,6 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { lex } = require('.');
 
+async function deleteBot(name) {
+  console.log(`Deleting BOT ${name}...`);
+  await lex.deleteBot({ name }).promise().catch(() => undefined);
+  console.log(`BOT ${name} deleted.`);
+}
+
 async function putBot (name) {
   
   // get intent json
@@ -25,7 +31,18 @@ async function putBot (name) {
 
 }
 
-module.exports = putBot;
+async function testBot(name, text){
+  const params = {
+    botAlias: '$LATEST',
+    botName: name,
+    inputText: text,
+    userId: 'ExampleUser1',
+  }
+  const result = await lexRuntime.postText(params).promise()
+  console.log(result);
+};
+
+module.exports = { testBot, putBot, deleteBot };
 if (require.main === module) {
   putBot(process.argv[2]);
 }

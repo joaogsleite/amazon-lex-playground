@@ -8,6 +8,7 @@ function replaceURIs(body) {
   body = body.replace('ACCOUNT_ID', accountId);
   return body 
 }
+
 async function addPersmissionToInvokeLambda(data) {
   const lambdaName = data.split(':function:')[1].split('/invocations"')[0];
   const permission = {
@@ -20,6 +21,13 @@ async function addPersmissionToInvokeLambda(data) {
   await lambda.addPermission(permission).promise().catch(() => undefined);
   console.log(`Permission for API Gateway to invoke lambda ${lambdaName} added.`);
   await sleep(3000);
+}
+
+async function deleteApi(name) {
+  const config = JSON.parse(fs.readFileSync(path.join(__dirname,'..','api',`${name}.config.json`),'utf-8'));
+  console.log(`Deleting API Gateway ${name}...`);
+  await apigateway.deleteRestApi({restApiId: config.id}).promise().catch(() => undefined);
+  console.log(`API Gateway ${name} deleted.`);
 }
 
 async function putApi(name) {
@@ -61,7 +69,7 @@ async function putApi(name) {
   console.log(`API Gateway ${name} REST config updated.`);
 };
 
-module.exports = putApi;
+module.exports = { deleteApi, putApi };
 if (require.main === module) {
   putApi(process.argv[2]);
 }

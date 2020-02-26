@@ -78,6 +78,8 @@ Playground project to test the aws lex bot platform.
 
 * Run `npm run deploy`
 
+> After deploy, you can delete all created resources on AWS with `npm run clean`
+
 
 ### Test
 

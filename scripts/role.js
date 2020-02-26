@@ -30,12 +30,12 @@ async function deleteRole(name) {
     console.log(`Policies for role ${name}: ${policies.AttachedPolicies.map(p=>p.PolicyName).join(',')}`);
     await Promise.all(policies.AttachedPolicies.map(async (policy) => {
       console.log(`Detaching policy ${policy.PolicyArn} from role ${name}...`);
-      await iam.detachRolePolicy({ RoleName: name, PolicyArn: policy.PolicyArn });
+      await iam.detachRolePolicy({ RoleName: name, PolicyArn: policy.PolicyArn }).promise();
       console.log(`Policy ${policy.PolicyArn} detached from role ${name}.`);
     }));
   }
-  await sleep(10000);
-  await iam.deleteRole({ RoleName: name }).promise().catch(() => undefined);
+  await sleep(3000);
+  await iam.deleteRole({ RoleName: name }).promise();
   console.log(`Role ${name} deleted.`);
 }
 

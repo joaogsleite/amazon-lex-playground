@@ -32,7 +32,7 @@ async function deleteRole(name) {
       console.log(`Policy ${policy.PolicyArn} detached from role ${name}.`);
     }));
   }
-  await sleep(5000);
+  await sleep(10000);
   await iam.deleteRole({ RoleName: name }).promise().catch(() => undefined);
   console.log(`Role ${name} deleted.`);
 }

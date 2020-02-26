@@ -10,9 +10,9 @@ let prefix = 'OrderFlowers';
 let suffix = '';
 
 suffix = 'Lambda';
+await putLambda(prefix + 'Entrypoint' + suffix, ['translate']);
 await putLambda(prefix + 'Dialog' + suffix);
-await putLambda(prefix + 'Fulfillment' + suffix, ['translate']);
-await putLambda(prefix + 'Entrypoint' + suffix);
+await putLambda(prefix + 'Fulfillment' + suffix);
 
 suffix = '';
 await putSlot('FlowerTypes' + suffix);

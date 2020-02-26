@@ -27,17 +27,18 @@ Playground project to test the aws lex bot platform.
 ### Infrastructure
 
 ```
-                             AmazonTranslate
-                                    ^
-                                    |
-                                    V
-   Platforms --> API Gateway --> EntrypointLambda --> AmazonLexBOT
-(ex: messenger)                         ||                 |
-                                    connectors             |
-                                                           V
-                                     DialogLambda  <-->  Intent  <-->  FulfillmentLambda
-                                                           ||
-                                                        slotTypes
+                                   AWSTranslate
+                                        ^
+                                        |
+                                        V
+   Platforms --> API Gateway --> EntrypointLambda --> AWSLexBOT
+(ex: messenger)                         ||               |
+                                    connectors           |
+                                                         |
+                                                         V
+                                   DialogLambda  <-->  Intent  <-->  FulfillmentLambda
+                                                         ||
+                                                      slotTypes
 ```
 
 

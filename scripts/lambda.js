@@ -20,7 +20,7 @@ async function putLambda(name, permissions = ['lambda']){
   sh(`
     cd lambdas/${name}
     cp ../../.env .
-    npm install --no-package-lock
+    npm install --no-package-lock 2>&1 > /dev/null
     zip -r ../../build/${name}.zip .
     rm .env
   `);

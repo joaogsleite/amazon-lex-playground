@@ -4,10 +4,10 @@ const translate = require('../services/translate');
 function handleResponse(text) {
   if (text.includes('ello')) {
     return 'Hello!';
-  } else if (text.includes('ho are you')) {
-    return 'I am a bot.';
+  } else if (text.includes('your name')) {
+    return 'My name is Bot';
   } else {
-    return 'Please try again.';
+    return 'I did not understand what you said. Please try again.';
   }
 }
 
@@ -20,6 +20,7 @@ function handleResponse(text) {
  */
 async function receiveMsg(context, userId, body) {
   const { text, language } = await translate(body);
+  console.log(`Message received in ${language} translated to en: ${text}`);
   context.language = language;
   const response = handleResponse(text)
   await sendMsg(context, userId, response);
@@ -34,7 +35,7 @@ async function receiveMsg(context, userId, body) {
  */
 async function sendMsg(context, userId, body) {
   const { text } = await translate(body, context.language);
-  return await connectors.sendMsg(context.platform, userId, text);
+  await connectors.sendMsg(context, userId, text);
 };
 
 

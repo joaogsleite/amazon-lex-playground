@@ -29,6 +29,8 @@ Facebook --> API Gateway --> EntrypointLambda --> Amazon Lex BOT
                                                         |
                                                         V
                                   DialogLambda  <-->  Intent  <-->  FulfillmentLambda
+                                                        ||
+                                                     SlotTypes
 ```
 
 

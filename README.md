@@ -20,6 +20,17 @@ Playground project to test the aws lex bot platform.
 * scripts
 
 
+```
+                             Amazon Translate
+                                    ^
+                                    |
+Facebook --> API Gateway --> EntrypointLambda --> Amazon Lex BOT
+                                                        |
+                                                        V
+                                  DialogLambda  <-->  Intent  <-->  FulfillmentLambda
+```
+
+
 ## Usage
 
 * Edit **json** files inside `lex/` sub-folders to edit *bot*, *intents* and *slots*

@@ -28,7 +28,7 @@ addListener('/messenger/webhook', async function (event) {
     case 'GET':
       const query = event.queryStringParameters
       if (query && query['hub.verify_token'] === FB_VERIFY_TOKEN && query['hub.mode'] === 'subscribe') {
-        return response('WEBHOOK_VERIFIED');
+        return response(query['hub.challenge']);
       } else {
         return response('WEBHOOK_NOT_VERIFIED', 403);
       }

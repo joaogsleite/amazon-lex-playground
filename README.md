@@ -24,6 +24,7 @@ Playground project to test the aws lex bot platform.
                              Amazon Translate
                                     ^
                                     |
+                                    V
 Facebook --> API Gateway --> EntrypointLambda --> Amazon Lex BOT
                                                         |
                                                         V

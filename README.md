@@ -18,6 +18,7 @@ Playground project to test the aws lex bot platform.
   * intents
   * slots
 * lambdas
+  * entrypoint
   * validation
   * fullfilment
 * api

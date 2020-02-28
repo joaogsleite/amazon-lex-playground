@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { lex, lexRuntime } = require('.');
+const { lex, lexRuntime, sleep } = require('.');
 
 async function deleteBot(name) {
   console.log(`Deleting BOT ${name}...`);
   await lex.deleteBot({ name }).promise().catch(() => undefined);
+  await sleep(5000);
   console.log(`BOT ${name} deleted.`);
 }
 

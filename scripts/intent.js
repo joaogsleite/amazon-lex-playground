@@ -26,6 +26,7 @@ async function addPermission(lambdaInfo) {
 async function deleteIntent(name) {
   console.log(`Deleting intent ${name}...`);
   await lex.deleteIntent({ name }).promise().catch(() => undefined);
+  await sleep(5000);
   console.log(`Intent ${name} deleted.`);
 }
 

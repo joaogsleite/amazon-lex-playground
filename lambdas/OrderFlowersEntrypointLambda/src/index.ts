@@ -1,6 +1,5 @@
-import { IEvent, IListener, ListenerFunc, IContext } from "./types";
+import { IEvent, IListener, ListenerFunc } from "./types";
 import dotenv from 'dotenv';
-import './connectors';
 import { response } from './services/apigateway';
 
 dotenv.config();
@@ -22,3 +21,5 @@ export async function handler (event: IEvent, context: any) {
     return response({ error: 'Not found' }, 404);
   }
 };
+
+import('./connectors');

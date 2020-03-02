@@ -54,6 +54,7 @@ Playground project to test the aws lex bot platform.
 
 * Edit **json** files inside `lex/` sub-folders to edit *bot*, *intents* and *slots*
 * Edit **js** files inside `lambdas/` folder to edit *validation* and *fulfillment* bot functions
+  * Add aws resource permissions to `package.json` **config.permissions** array of each lambda function
 * Edit **json** files inside `api/` folder to edit api gateway configurations
 * Copy `.env.example` to `.env` and replace environment variables values
 

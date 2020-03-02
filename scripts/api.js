@@ -42,7 +42,7 @@ async function putApi(name) {
     console.log(`API Gateway ${name} created.`);
     if (result) {
       config.id = result.id;
-      console.log(`Uploading API Gateway ${name} config json file...`);
+      console.log(`Updating API Gateway ${name} config json file...`);
       fs.writeFileSync(
         path.join(__dirname, '..', 'api', `${name}.config.json`),
         JSON.stringify(config, null, 2),
@@ -67,6 +67,9 @@ async function putApi(name) {
   console.log(`Updating API Gateway ${name} REST config...`);
   await apigateway.putRestApi(params).promise();
   console.log(`API Gateway ${name} REST config updated.`);
+  const stageName = 'dev';
+  await apigateway.createDeployment({ restApiId: config.id, stageName }).promise();
+  console.log(`API Gateway URL: https://${config.id}.execute-api.${region}.amazonaws.com/${stageName}`)
 };
 
 module.exports = { deleteApi, putApi };

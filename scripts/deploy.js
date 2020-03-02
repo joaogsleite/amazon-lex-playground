@@ -1,22 +1,36 @@
-(async function (){
-
+const { listJsons, listFolders } = require('.');
 const { putLambda } = require('./lambda');
 const { putSlot } = require('./slot');
 const { putIntent } = require('./intent');
 const { putBot } = require('./bot');
 const { putApi } = require('./api');
 
-await putLambda('OrderFlowersEntrypointLambda', ['translate','lex']);
-await putLambda('OrderFlowersDialogLamda');
-await putLambda('OrderFlowersFulfillmentLambda');
+const LAMBDAS = listFolders(__dirname, '..', 'lambdas');
+const APIS = listJsons(__dirname, '..', 'api');
+const BOTS = listJsons(__dirname, '..', 'lex', 'bots');
+const INTENTS = listJsons(__dirname, '..', 'lex', 'intents');
+const SLOTS = listJsons(__dirname, '..', 'lex', 'slots');
 
-await putSlot('FlowerTypes');
+(async function (){
 
-await putIntent('OrderFlowers');
-await putIntent('GiftPackage');
+  for (const lambda of LAMBDAS) {
+    await putLambda(lambda);
+  }
 
-await putBot('OrderFlowers');
+  for (const slot of SLOTS) {
+    await putSlot(slot);
+  }
 
-await putApi('OrderFlowersApi');
+  for (const intent of INTENTS) {
+    await putIntent(intent);
+  }
+
+  for (const bot of BOTS) {
+    await putBot(bot);
+  }
+
+  for (const api of APIS) {
+    await putApi(api);
+  }
 
 })();

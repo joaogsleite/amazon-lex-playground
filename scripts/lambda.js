@@ -15,7 +15,7 @@ async function deleteLambda(name) {
   console.log(`Lambda function ${name} deleted.`);
 }
 
-async function putLambda(name, permissions = ['lambda']){
+async function putLambda(name){
 
   sh(`
     cd lambdas/${name}
@@ -28,20 +28,23 @@ async function putLambda(name, permissions = ['lambda']){
     FunctionName: name,
   };
   const current = await lambda.getFunction(searchParams).promise().catch(() => undefined);
+  const ZipFile = fs.readFileSync(path.join(__dirname, '..', 'lambdas', name, 'build', 'build.zip'));
   if (current) {
     const params = {
       FunctionName: name, 
       Publish: true, 
-      ZipFile: fs.readFileSync(path.join(__dirname, '..', 'lambdas', name, 'build', 'build.zip')),
+      ZipFile,
     };
     console.log(`Lambda function ${name} already exists. Just updating the code...`);
     await lambda.updateFunctionCode(params).promise();
     console.log(`Lambda function ${name} code updated.`);
   } else {
+    const packageJson = require(`../lambdas/${name}/package.json`);
+    const permissions = packageJson && packageJson.config && packageJson.config.permissions
     const role = await putRole(name+'Role', 'lambda', permissions);
     const lambdaParams = {
       Code: {
-        ZipFile: fs.readFileSync(path.join(__dirname, '..', 'build', name+'.zip')),
+        ZipFile,
       }, 
       Description: "", 
       FunctionName: name, 

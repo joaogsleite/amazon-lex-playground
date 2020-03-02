@@ -1,29 +1,36 @@
+const { listFolders, listJsons } = require('.');
+const { deleteLambda } = require('./lambda');
+const { deleteSlot } = require('./slot');
+const { deleteIntent } = require('./intent');
+const { deleteBot } = require('./bot');
+const { deleteApi } = require('./api');
+
+const LAMBDAS = listFolders(__dirname, '..', 'lambdas');
+const APIS = listJsons(__dirname, '..', 'api');
+const BOTS = listJsons(__dirname, '..', 'lex', 'bots');
+const INTENTS = listJsons(__dirname, '..', 'lex', 'intents');
+const SLOTS = listJsons(__dirname, '..', 'lex', 'slots');
+
 (async function (){
 
-  const { deleteLambda } = require('./lambda');
-  const { deleteSlot } = require('./slot');
-  const { deleteIntent } = require('./intent');
-  const { deleteBot } = require('./bot');
-  const { deleteApi } = require('./api');
-  
-  let prefix = 'OrderFlowers';
-  let suffix = '';
+  for (const lambda of LAMBDAS) {
+    await deleteLambda(lambda);
+  }
 
-  suffix = 'Lambda';
-  await deleteLambda(prefix + 'Dialog' + suffix);
-  await deleteLambda(prefix + 'Fulfillment' + suffix, ['translate']);
-  await deleteLambda(prefix + 'Entrypoint' + suffix);
+  for (const bot of BOTS) {
+    await deleteBot(bot);
+  }
 
-  suffix = 'Bot';
-  await deleteBot(prefix + '' + suffix);
+  for (const intent of INTENTS) {
+    await deleteIntent(intent);
+  }
 
-  suffix = '';
-  await deleteIntent(prefix + '' + suffix);
+  for (const slot of SLOTS) {
+    await deleteSlot(slot);
+  }
 
-  suffix = '';
-  await deleteSlot('FlowerTypes' + suffix);
-
-  suffix = 'Api';
-  await deleteApi(prefix + '' + suffix);
+  for (const api of APIS) {
+    await deleteApi(api);
+  }
   
 })();

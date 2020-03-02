@@ -1,4 +1,7 @@
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+
 const aws = require('aws-sdk');
 
 const region = process.env.REGION;
@@ -14,6 +17,18 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function listJsons(...paths) {
+  return fs.readdirSync(path.join(...paths)).filter((name) => {
+    return name.includes('.json') && !name.includes('.config.json');
+  }).map((name) => {
+    return name.replace('.json', '');
+  });
+}
+
+function listFolders(...paths) {
+  return fs.readdirSync(path.join(...paths));
+}
+
 module.exports = { 
   apigateway,
   iam,
@@ -23,4 +38,6 @@ module.exports = {
   region,
   accountId,
   sleep,
+  listJsons,
+  listFolders,
 };

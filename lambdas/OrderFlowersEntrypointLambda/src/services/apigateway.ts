@@ -5,10 +5,10 @@ export function response(data: any, statusCode = 200, headers: IHeaders = {}): I
     ? 'text/plain'
     : 'application/json'
   return {
-    "isBase64Encoded": false,
-    "statusCode": statusCode,
-    "headers": headers,
-    "body": typeof data === 'string'
+    isBase64Encoded: false,
+    statusCode: statusCode,
+    headers: headers,
+    body: typeof data === 'string'
       ? data
       : JSON.stringify(data),
   };

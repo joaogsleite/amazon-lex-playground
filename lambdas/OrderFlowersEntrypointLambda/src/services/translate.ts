@@ -1,8 +1,8 @@
-const { translate } = require('./aws');
+import { translate } from './aws';
 
-const TERMINOLOGY_NAMES = [];
+const TERMINOLOGY_NAMES: string[] = [];
 
-module.exports = async function (text, to = 'en') {
+export default async function (text: string, to: string = 'en') {
   const params = {
     SourceLanguageCode: 'auto',
     TargetLanguageCode: to,

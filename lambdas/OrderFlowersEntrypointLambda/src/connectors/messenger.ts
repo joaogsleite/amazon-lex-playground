@@ -1,18 +1,12 @@
-const { addListener } = require('../index');
-const { response } = require('../utils/api');
-const axios = require('axios');
-const { receiveMsg } = require('.');
+import { addListener } from '../index'
+import { response } from '../services/apigateway';
+import axios from 'axios';
+import { receiveMsg } from '.';
+import { IContext } from '../types';
 
 const { FB_PAGE_TOKEN, FB_VERIFY_TOKEN } = process.env
 
-
-/**
- * Send facebook messenger message
- * @param {number} to - Page-scoped ID
- * @param {any} message - Message body
- * @param {'RESPONSE'|'UPDATE'|'MESSAGE_TAG'} type - Message type
- */
-module.exports.sendMsg = function (context, message, type = 'RESPONSE') {
+export function sendMsg(context: IContext, message: string) {
   const body = {
     recipient: { id: context.userId },
     message: { text: message },
@@ -37,7 +31,7 @@ addListener('/messenger/webhook', async function (event) {
       if (body.object === 'page') {
         for(const entry of body.entry) {
           const webhook_event = entry.messaging[0];
-          const context = { 
+          const context: IContext = { 
             platform: 'messenger',
             userId: webhook_event.sender.id,
           };
@@ -49,10 +43,7 @@ addListener('/messenger/webhook', async function (event) {
         };
         return response('EVENT_RECEIVED');
       } else {
-        res.sendStatus(404);
         return response('ERROR', 404);
       }
-     
-      
   }
 });

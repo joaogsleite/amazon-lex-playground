@@ -3,6 +3,10 @@
     {
       "intentVersion": "$LATEST",
       "intentName": "OrderFlowers"
+    },
+    {
+      "intentVersion": "$LATEST",
+      "intentName": "GiftPackage"
     }
   ],
   "name": "OrderFlowersBot",

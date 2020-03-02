@@ -19,10 +19,9 @@ async function putLambda(name, permissions = ['lambda']){
 
   sh(`
     cd lambdas/${name}
-    cp ../../.env .
     npm install --no-package-lock 2>&1 > /dev/null
-    zip -r ../../build/${name}.zip .
-    rm .env
+    npm run build
+    npm run zip
   `);
 
   const searchParams = {
@@ -33,7 +32,7 @@ async function putLambda(name, permissions = ['lambda']){
     const params = {
       FunctionName: name, 
       Publish: true, 
-      ZipFile: fs.readFileSync(path.join(__dirname, '..', 'build', name+'.zip')),
+      ZipFile: fs.readFileSync(path.join(__dirname, '..', 'lambdas', name, 'build', 'build.zip')),
     };
     console.log(`Lambda function ${name} already exists. Just updating the code...`);
     await lambda.updateFunctionCode(params).promise();

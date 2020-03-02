@@ -4,8 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "rm -rf build",
+    "build": "tsc",
+    "postbuild": "cp package.json ../../.env build/",
+    "zip": "cd build/ && npm install --no-package-lock --only=prod && zip -r build.zip .",
+    "test": "node build/index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^13.7.7",
+    "typescript": "^3.8.3"
+  }
 }

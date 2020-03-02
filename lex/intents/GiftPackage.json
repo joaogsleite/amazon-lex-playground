@@ -1,0 +1,43 @@
+{
+  "confirmationPrompt": {
+    "maxAttempts": 2,
+    "messages": [
+      {
+        "content": "Okay, your gift package is ready with for birthday on {Birthday}.  Does this sound okay?",
+        "contentType": "PlainText"
+      }
+    ]
+  },
+  "name": "GiftPackage",
+  "rejectionStatement": {
+    "messages": [
+      {
+        "content": "Okay, I will not place your order.",
+        "contentType": "PlainText"
+      }
+    ]
+  },
+  "sampleUtterances": [],
+  "slots": [
+    {
+      "slotType": "AMAZON.DATE",
+      "name": "Birthday",
+      "slotConstraint": "Required",
+      "valueElicitationPrompt": {
+        "maxAttempts": 2,
+        "messages": [
+          {
+            "content": "When is the birthday?",
+            "contentType": "PlainText"
+          }
+        ]
+      },
+      "priority": 2,
+      "description": "Birthday"
+    }
+  ],
+  "fulfillmentActivity": {
+    "type": "ReturnIntent"
+  },
+  "description": "Intent to order a gift package for your flowers"
+}

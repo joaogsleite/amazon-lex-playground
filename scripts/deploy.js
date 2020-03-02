@@ -6,24 +6,17 @@ const { putIntent } = require('./intent');
 const { putBot } = require('./bot');
 const { putApi } = require('./api');
 
-let prefix = 'OrderFlowers';
-let suffix = '';
+await putLambda('OrderFlowersEntrypointLambda', ['translate','lex']);
+await putLambda('OrderFlowersDialogLamda');
+await putLambda('OrderFlowersFulfillmentLambda');
 
-suffix = 'Lambda';
-await putLambda(prefix + 'Entrypoint' + suffix, ['translate','lex']);
-await putLambda(prefix + 'Dialog' + suffix);
-await putLambda(prefix + 'Fulfillment' + suffix);
+await putSlot('FlowerTypes');
 
-suffix = '';
-await putSlot('FlowerTypes' + suffix);
+await putIntent('OrderFlowers');
+await putIntent('GiftPackage');
 
-suffix = '';
-await putIntent(prefix + '' + suffix);
+await putBot('OrderFlowers');
 
-suffix = 'Bot';
-await putBot(prefix + '' + suffix);
-
-suffix = 'Api';
-await putApi(prefix + '' + suffix);
+await putApi('OrderFlowersApi');
 
 })();

@@ -1,9 +1,6 @@
+import { IResponse, IHeaders } from "../types";
 
-export interface IHeaders {
-  [key: string]: string,
-}
-
-export function response(data: any, statusCode = 200, headers: IHeaders = {}) {
+export function response(data: any, statusCode = 200, headers: IHeaders = {}): IResponse {
   headers['Content-Type'] = typeof data === 'string'
     ? 'text/plain'
     : 'application/json'

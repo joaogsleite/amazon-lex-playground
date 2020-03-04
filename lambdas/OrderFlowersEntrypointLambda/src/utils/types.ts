@@ -1,6 +1,16 @@
 
 export type Platform = 'messenger';
 
+export interface IMessageContent {
+  image?: string,
+  url?: string,
+  title?: string,
+  text?: string,
+  buttons?: Array<{ text: string, value: string }>,
+};
+
+export type IMessage = IMessageContent | IMessageContent[];
+
 export interface IProfile {
   name?: string,
   locale?: string,

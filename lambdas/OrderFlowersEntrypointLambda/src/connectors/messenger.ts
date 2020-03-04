@@ -5,7 +5,7 @@ import axios from 'axios';
 import { receiveMsg } from '.';
 
 // utils
-import { IContext, IProfile } from '../utils/types';
+import { IContext, IProfile, IMessage } from '../utils/types';
 import { response } from '../utils/apigateway';
 import { createContext } from '../utils/context';
 import { addListener } from '../index';
@@ -13,10 +13,73 @@ import { addListener } from '../index';
 const { FB_PAGE_TOKEN, FB_VERIFY_TOKEN } = process.env;
 const URL = 'https://graph.facebook.com';
 
-export function sendMsg(context: IContext, message: string) {
+function parseMsg(message: IMessage) {
+  const parseButtons = (btns: Array<{ text: string, value: string}>) => btns.map((btn) => ({
+    // Button
+    // https://developers.facebook.com/docs/messenger-platform/send-messages/buttons
+    type: btn.value.startsWith('http') ? 'web_url' : 'postback',
+    title: btn.text,
+    payload: btn.value,
+  }))
+  const parseCards = () => ({
+    // List Template
+    // https://developers.facebook.com/docs/messenger-platform/reference/template/list
+    attachment: {
+      type: 'template',
+      payload: {
+        template_type: 'generic',
+        elements: (Array.isArray(message) ? message : [message]).map((msg)=> ({
+          title: msg.title,
+          image_url: msg.image,
+          subtitle: msg.text,
+          buttons: msg.buttons && parseButtons(msg.buttons),
+        })),
+      }
+    }
+  })
+  if (Array.isArray(message)) {
+    return parseCards();
+  } else {
+    if (message.buttons && message.buttons.length > 0) {
+      if (message.buttons.length > 3) {
+        // Quick Replies
+        // https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies
+        return {
+          text: message.text,
+          quick_replies: message.buttons.map((button) => ({
+            content_type: 'text',
+            title: button.text,
+            payload: button.value,
+          })),
+        };
+      } else if (message.title || message.image) {
+        return parseCards()
+      } else {
+        // Buttons template
+        // https://developers.facebook.com/docs/messenger-platform/reference/template/button
+        return {
+          attachment:{
+            type: 'template',
+            payload: {
+              template_type: 'button',
+              text: message.text,
+              buttons: message.buttons && parseButtons(message.buttons),
+            },
+          },
+        };
+      }
+    } else if (message.title || message.image) {
+      return parseCards();
+    } else {
+      return { text: message.text };
+    }
+  }
+};
+
+export function sendMsg(context: IContext, message: IMessage) {
   const body = {
     recipient: { id: context.userId },
-    message: { text: message },
+    message: parseMsg(message),
   };
   const url = `${URL}/v6.0/me/messages?access_token=${FB_PAGE_TOKEN}`;
   return axios.post(url, body).catch(console.log);

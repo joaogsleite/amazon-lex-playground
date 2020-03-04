@@ -25,7 +25,7 @@ export async function fulfillContext(context: IContext): Promise<IContext> {
   }
 }
 
-export default async function (context: IContext, inputText: string) {
+export default function (context: IContext, inputText: string) {
   const params: PostTextRequest = {
     botAlias: '$LATEST',
     botName,
@@ -33,11 +33,5 @@ export default async function (context: IContext, inputText: string) {
     userId: `${context.platform}-${context.userId}`,
     sessionAttributes: toStringMap(context),
   };
-  const result = await lexRuntime.postText(params).promise();
-  return {
-    message: result.message || '',
-    context: result.sessionAttributes
-      ? toContext(result.sessionAttributes)
-      : context,
-  }
+  return lexRuntime.postText(params).promise();
 };

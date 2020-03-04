@@ -5,16 +5,16 @@ import * as  messageController from '../controllers/messages';
 import * as messenger from './messenger';
 
 // utils
-import { IContext } from '../utils/types';
+import { IContext, IMessage } from '../utils/types';
 
-export function receiveMsg(context: IContext, body: string) {
-  return messageController.receiveMsg(context, body);
+export function receiveMsg(context: IContext, msg: string) {
+  return messageController.receiveMsg(context, msg);
 };
 
-export function sendMsg(context: IContext, body: string) {
+export function sendMsg(context: IContext, msg: IMessage) {
   switch(context.platform) {
     case 'messenger':
-      return messenger.sendMsg(context, body);
+      return messenger.sendMsg(context, msg);
   }
 };
 

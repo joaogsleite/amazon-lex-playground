@@ -4,9 +4,28 @@ import { PostTextRequest } from 'aws-sdk/clients/lexruntime';
 
 // utils
 import { toContext, toStringMap } from '../utils/context';
-import { IContext } from '../utils/types';
+import { IContext, IMessage } from '../utils/types';
+import LexRuntime = require('aws-sdk/clients/lexruntime');
 
 const botName = process.env.LEX_BOT_NAME || '';
+
+function parseMsg(result: LexRuntime.PostTextResponse): IMessage {
+  const cards = result.responseCard && result.responseCard.genericAttachments;
+  if (cards && cards.length > 0) {
+    const messages = cards.map((card) => ({
+      title: card.title && card.subTitle && card.title,
+      text: (card.title && card.subTitle) ? card.subTitle : result.message,
+      url: card.attachmentLinkUrl,
+      image: card.imageUrl,
+      buttons: card.buttons,
+    }));
+    return messages.length === 1
+      ? messages[0]
+      : messages;
+  } else {
+    return { text: result.message };
+  }
+};
 
 export async function fulfillContext(context: IContext): Promise<IContext> {
   const params = {
@@ -25,7 +44,7 @@ export async function fulfillContext(context: IContext): Promise<IContext> {
   }
 }
 
-export default function (context: IContext, inputText: string) {
+export default async function (context: IContext, inputText: string): Promise<{ message: IMessage, context: IContext}> {
   const params: PostTextRequest = {
     botAlias: '$LATEST',
     botName,
@@ -33,5 +52,14 @@ export default function (context: IContext, inputText: string) {
     userId: `${context.platform}-${context.userId}`,
     sessionAttributes: toStringMap(context),
   };
-  return lexRuntime.postText(params).promise();
+  const result = await lexRuntime.postText(params).promise();
+  const message = parseMsg(result);
+  const newContext = toContext(result.sessionAttributes || {});
+  return {
+    message,
+    context: {
+      ...context,
+      ...newContext,
+    },
+  }
 };

@@ -12,7 +12,7 @@
   "rejectionStatement": {
     "messages": [
       {
-        "content": "Okay, I will not place your order.",
+        "content": "Okay, I will not include a gift package.",
         "contentType": "PlainText"
       }
     ]

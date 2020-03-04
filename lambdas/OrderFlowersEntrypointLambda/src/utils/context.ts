@@ -1,6 +1,7 @@
 import { IContext, Platform, StringMap } from "./types";
 
 export function mostUsedLanguage(context: IContext): string {
+  console.log(`Languages: ${JSON.stringify(context.languages)}`)
   return context.languages.reduce((result, current, i, array) => 
     array.filter(v => v === result).length > array.filter(v => v === current).length
       ? result
@@ -13,6 +14,7 @@ export function toStringMap(context: IContext): StringMap {
     platform: context.platform,
     languages: JSON.stringify(context.languages || []),
     userId: (context.userId || '') + '',
+    profile: context.profile ? JSON.stringify(context.profile) : '',
   };
 };
 
@@ -21,6 +23,7 @@ export function toContext(attributes: StringMap): IContext {
     platform: attributes.platform as Platform,
     languages: JSON.parse(attributes.languages || '[]'),
     userId: Number(attributes.userId || '0'),
+    profile: attributes.profile && JSON.parse(attributes.profile),
   };
 };
 

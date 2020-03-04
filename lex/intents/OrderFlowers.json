@@ -33,7 +33,8 @@
             "content": "What type of flowers would you like to order?",
             "contentType": "PlainText"
           }
-        ]
+        ],
+        "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\",\"genericAttachments\":[{\"buttons\":[{\"text\":\"Tulips\",\"value\":\"tulips\"},{\"text\":\"Lilies\",\"value\":\"lilies\"},{\"text\":\"Roses\",\"value\":\"roses\"}]}]}"
       },
       "priority": 1,
       "slotTypeVersion": "$LATEST",

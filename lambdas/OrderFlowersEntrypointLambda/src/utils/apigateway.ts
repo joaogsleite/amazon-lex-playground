@@ -1,6 +1,6 @@
-import { IResponse, IHeaders } from "../types";
+import { IResponse, StringMap } from "./types";
 
-export function response(data: any, statusCode = 200, headers: IHeaders = {}): IResponse {
+export function response(data: any, statusCode = 200, headers: StringMap = {}): IResponse {
   headers['Content-Type'] = typeof data === 'string'
     ? 'text/plain'
     : 'application/json'
@@ -12,4 +12,4 @@ export function response(data: any, statusCode = 200, headers: IHeaders = {}): I
       ? data
       : JSON.stringify(data),
   };
-}
+};

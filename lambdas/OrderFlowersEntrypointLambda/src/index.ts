@@ -1,8 +1,7 @@
-import { IEvent, IListener, ListenerFunc } from "./types";
-import dotenv from 'dotenv';
-import { response } from './services/apigateway';
-
-dotenv.config();
+// utils
+import './utils/dotenv';
+import { IEvent, IListener, ListenerFunc } from "./utils/types";
+import { response } from './utils/apigateway';
 
 const listeners: IListener[] = [];
 

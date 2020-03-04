@@ -1,27 +1,37 @@
 
-export interface IContext {
-  platform: 'messenger',
-  language?: string,
-  userId: number,
-}
+export type Platform = 'messenger';
 
-export interface IHeaders {
+export interface IProfile {
+  name?: string,
+  locale?: string,
+  gender?: string,
+  timezone?: number,
+};
+
+export interface IContext {
+  platform: Platform,
+  languages: string[],
+  userId?: number,
+  profile?: IProfile,
+};
+
+export interface StringMap {
   [key: string]: string,
-}
+};
 
 export interface IResponse {
   isBase64Encoded: boolean,
   statusCode: number,
-  headers: IHeaders,
+  headers: StringMap,
   body: string,
-}
+};
 
-export type ListenerFunc = (event: IEvent, context: any) => Promise<IResponse>
+export type ListenerFunc = (event: IEvent, context: any) => Promise<IResponse>;
 
 export interface IListener {
   name: string,
   func: ListenerFunc,
-}
+};
 
 export interface IEvent {
   path?: string,
@@ -31,4 +41,4 @@ export interface IEvent {
     [key: string]: string,
   },
   body: any,
-}
+};

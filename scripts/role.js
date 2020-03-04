@@ -10,7 +10,7 @@ async function attachPolicyOrServicePermission(role, name) {
   } else if (name.includes('lambda')) {
     policyArn = 'arn:aws:iam::aws:policy/AWSLambdaExecute';
   } else if (name.includes('lex')) {
-    policyArn = 'arn:aws:iam::aws:policy/AmazonLexRunBotsOnly';
+    policyArn = 'arn:aws:iam::aws:policy/AmazonLexFullAccess';
   }
   console.log(`Attaching policy ${policyArn} to role ${role.RoleName}...`);
   await iam.attachRolePolicy({

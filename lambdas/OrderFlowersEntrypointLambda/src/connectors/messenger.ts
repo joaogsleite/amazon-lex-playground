@@ -76,13 +76,15 @@ function parseMsg(message: IMessage) {
   }
 };
 
-export function sendMsg(context: IContext, message: IMessage) {
-  const body = {
-    recipient: { id: context.userId },
-    message: parseMsg(message),
-  };
+export async function sendMsg(context: IContext, message: IMessage) {
   const url = `${URL}/v6.0/me/messages?access_token=${FB_PAGE_TOKEN}`;
-  return axios.post(url, body).catch(console.log);
+  if (Array.isArray(message)) {
+    if (message.length > 1 && message[0].text && !message[0].url && !message[0].buttons && !message[0].image && !message[0].title) {
+      const first = message.shift();
+      await axios.post(url, { recipient: { id: context.userId }, message: first });
+    }
+  }
+  return await axios.post(url, { recipient: { id: context.userId }, message: parseMsg(message) });
 };
 
 export async function getProfile(context: IContext): Promise<IProfile> {

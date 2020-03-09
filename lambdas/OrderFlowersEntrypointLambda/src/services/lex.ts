@@ -12,13 +12,16 @@ const botName = process.env.LEX_BOT_NAME || '';
 function parseMsg(result: LexRuntime.PostTextResponse): IMessage {
   const cards = result.responseCard && result.responseCard.genericAttachments;
   if (cards && cards.length > 0) {
-    const messages = cards.map((card) => ({
-      title: card.title && card.subTitle && card.title,
-      text: (card.title && card.subTitle) ? card.subTitle : result.message,
+    const messages: IMessage = cards.map((card) => ({
+      title: card.title,
+      text: card.subTitle,
       url: card.attachmentLinkUrl,
       image: card.imageUrl,
       buttons: card.buttons,
     }));
+    if (result.message) {
+      messages.unshift({ text: result.message });
+    }
     return messages.length === 1
       ? messages[0]
       : messages;

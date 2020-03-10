@@ -125,7 +125,7 @@ addListener('/messenger/webhook', async function (event) {
           if (webhook_event.message) {
             await receiveMsg(context, webhook_event.message.text);
           } else if (webhook_event.postback) {
-            await receiveMsg(context, webhook_event.postback);
+            await receiveMsg(context, webhook_event.postback.payload);
           }
         };
         return response('EVENT_RECEIVED');

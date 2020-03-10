@@ -19,11 +19,11 @@ function parseMsg(result: LexRuntime.PostTextResponse): IMessage {
       image: card.imageUrl,
       buttons: card.buttons,
     }));
-    if (result.message) {
+    if (result.message && messages[0].title) {
       messages.unshift({ text: result.message });
     }
     return messages.length === 1
-      ? messages[0]
+      ? { ...messages[0], text: messages[0].text || result.message }
       : messages;
   } else {
     return { text: result.message };
